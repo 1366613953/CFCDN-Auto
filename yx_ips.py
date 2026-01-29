@@ -19,7 +19,8 @@ urls = [
     "https://cf.090227.xyz/",
     "https://stock.hostmonit.com/CloudFlareYes",
     "https://ip.164746.xyz/",
-    "https://monitor.gacjie.cn/page/cloudflare/ipv4.html",
+    "https://www.wetest.vip/page/cloudflare/address_v4.html",
+  # "https://345673.xyz/"
 ]
 
 # 解析延迟数据的正则表达式
@@ -86,7 +87,7 @@ def process_site_data(url):
                     latency_unit = 'ms'
                     data.append(f"{ip_address}-{latency_value}{latency_unit}")
 
-    elif "monitor.gacjie.cn" in url:
+    elif "www.wetest.vip" in url:
         rows = soup.find_all('tr')
         for row in rows:
             tds = row.find_all('td')
@@ -100,19 +101,19 @@ def process_site_data(url):
                     latency_unit = 'ms'
                     data.append(f"{ip_address}#{line_name}-{latency_value}{latency_unit}")
 
-    elif "345673.xyz" in url:
-        rows = soup.find_all('tr', class_=re.compile(r'line-cm|line-ct|line-cu'))
-        for row in rows:
-            tds = row.find_all('td')
-            if len(tds) >= 4:
-                line_name = tds[0].text.strip()
-                ip_address = tds[1].text.strip()
-                latency_text = tds[3].text.strip()
-                latency_match = latency_pattern.match(latency_text)
-                if latency_match:
-                    latency_value = latency_match.group(1)
-                    latency_unit = 'ms'
-                    data.append(f"{ip_address}#{line_name}-{latency_value}{latency_unit}")
+    #elif "345673.xyz" in url:
+        #rows = soup.find_all('tr', class_=re.compile(r'line-cm|line-ct|line-cu'))
+        #for row in rows:
+            #tds = row.find_all('td')
+            #if len(tds) >= 4:
+                #line_name = tds[0].text.strip()
+                #ip_address = tds[1].text.strip()
+                #latency_text = tds[3].text.strip()
+                #latency_match = latency_pattern.match(latency_text)
+                #if latency_match:
+                    #latency_value = latency_match.group(1)
+                    #latency_unit = 'ms'
+                    #data.append(f"{ip_address}#{line_name}-{latency_value}{latency_unit}")
 
     return data
 
